@@ -26,8 +26,8 @@ foreach($tracks as $track) {
 $bac = $songs;
 shuffle($bac);
 
-$list_artist = array_unique($artist_list);
-$list_track = array_unique($track_list);
+$max_artist = floor(count(array_unique($artist_list))/2);
+$max_track = floor(count(array_unique($track_list))/2);
 
 $playlist = array();
 $i = 0;
@@ -35,13 +35,13 @@ $nb_pl = 0;
 
 do {
 
-    if ((count($list_artist)/2) < $rules['artist_separation']) {
-        echo "WARNING: artist_separation is to high: ".$rules['artist_separation']." use a value between 1 and ".floor(count($list_artist)/2)."\n";
+    if ($max_artist < $rules['artist_separation']) {
+        echo "WARNING: artist_separation is to high: ".$rules['artist_separation']." use a value between 1 and ".$max_artist."\n";
         exit;
     }
 
-    if ((count($list_track)/2) < $rules['track_separation']) {
-        echo "WARNING: track_separation is to high: ".$rules['track_separation']." use a value between 1 and ".floor(count($list_track)/2)."\n";
+    if ($max_track < $rules['track_separation']) {
+        echo "WARNING: track_separation is to high: ".$rules['track_separation']." use a value between 1 and ".$max_track."\n";
         exit;
     }
 
