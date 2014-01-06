@@ -31,6 +31,7 @@ $list_track = array_unique($track_list);
 
 $playlist = array();
 $i = 0;
+$nb_pl = 0;
 
 do {
 
@@ -48,9 +49,9 @@ do {
 
     if ($track) {
         $playlist[] = $track;
+        $nb_pl++;
     }
 
-    $nb_pl = count($playlist);
     $i++;
 
 } while($nb_pl < $rules['playlist_size']);
