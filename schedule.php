@@ -1,24 +1,21 @@
 <?php
 
 include 'function.php';
+include 'rules.php';
 
-$rules = array(
-    'artist_separation' => 2,
-    'track_separation' => 6,
-    'playlist_size' => 60
-);
-
-$folder = realpath(dirname(__FILE__))."/music";
+$folder = realpath(dirname(__FILE__))."/music/";
 
 $tracks = read_folder($folder);
 
 foreach($tracks as $track) {
-    list($artist, $title) = explode(' - ', $track);
+    $path_track = pathinfo($track);
+    list($artist, $title) = explode(' - ', $path_track['filename']);
     $artist_list[] = $artist;
     $track_list[] = $title;
     $song = new stdclass;
     $song->artist = $artist;
     $song->title = $title;
+    $song->filename = $folder.$track;
     $song->duration = rand(135,305);
     $songs[] = $song;
 }
@@ -56,6 +53,10 @@ do {
 
 } while($nb_pl < $rules['playlist_size']);
 
+// m3u file
+echo "#EXTM3U\n";
+
 foreach ($playlist as $item) {
-    echo $item->artist." - ".$item->title."\n";
+    echo '#EXTINF:-1, '.$item->artist.' - '.$item->title."\n";
+    echo $item->filename."\n";
 }
