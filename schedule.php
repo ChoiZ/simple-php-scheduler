@@ -3,7 +3,7 @@
 include 'function.php';
 include 'rules.php';
 
-$folder = realpath(dirname(__FILE__))."/music/";
+$folder = realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR.'music'.DIRECTORY_SEPARATOR;
 
 $tracks = read_folder($folder);
 
