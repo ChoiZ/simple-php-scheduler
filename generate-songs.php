@@ -127,7 +127,6 @@ $tracks = array(
   array('artiste' => 'fall out boy','titre' => 'thnks fr the mmrs'),
   array('artiste' => 'far east movement f/ryan tedder','titre' => 'rocketeer'),
   array('artiste' => 'far east movement feat. cataracs &amp; dev','titre' => 'like a g6'),
-  array('artiste' => 'fat joe','titre' => 'what\'s luv? (extra clean)'),
   array('artiste' => 'fergie','titre' => 'big girls don\'t cry'),
   array('artiste' => 'fergie','titre' => 'clumsy'),
   array('artiste' => 'fergie f/ludacris','titre' => 'glamorous'),
