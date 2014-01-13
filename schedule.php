@@ -30,17 +30,41 @@ $playlist = array();
 $i = 0;
 $nb_pl = 0;
 
+
+$error = array();
+
+if (empty($rules['artist_separation'])) {
+    $error[] = 'WARNING: artist_separation must be set in rules.php file.';
+}
+
+if (empty($rules['track_separation'])) {
+    $error[] = 'WARNING: track_separation must be set in rules.php file.';
+}
+
+if (empty($rules['playlist_name'])) {
+    $error[] = 'WARNING: playlist_name must be set in rules.php file.';
+}
+
+if (empty($rules['playlist_size'])) {
+    $error[] = 'WARNING: playlist_size must be set in rules.php file.';
+}
+
+if ($max_artist < $rules['artist_separation']) {
+    $error[] = 'WARNING: artist_separation is to high: '.$rules['artist_separation'].' use a value between 1 and '.$max_artist;
+}
+
+if ($max_track < $rules['track_separation']) {
+    $error[] = 'WARNING: track_separation is to high: '.$rules['track_separation'].' use a value between 1 and '.$max_track;
+}
+
+if (count($error)>0) {
+    foreach($error as $msg) {
+        echo $msg."\n";
+    }
+    exit();
+}
+
 do {
-
-    if ($max_artist < $rules['artist_separation']) {
-        echo "WARNING: artist_separation is to high: ".$rules['artist_separation']." use a value between 1 and ".$max_artist."\n";
-        exit;
-    }
-
-    if ($max_track < $rules['track_separation']) {
-        echo "WARNING: track_separation is to high: ".$rules['track_separation']." use a value between 1 and ".$max_track."\n";
-        exit;
-    }
 
     $track = get_track($i,$bac,$playlist);
 
@@ -53,10 +77,13 @@ do {
 
 } while($nb_pl < $rules['playlist_size']);
 
-// m3u file
-echo "#EXTM3U\n";
+$m3u_content = '#EXTM3U'."\n";
 
 foreach ($playlist as $item) {
-    echo '#EXTINF:-1, '.$item->artist.' - '.$item->title."\n";
-    echo $item->filename."\n";
+    $m3u_content .= '#EXTINF:-1, '.$item->artist.' - '.$item->title."\n";
+    $m3u_content .= $item->filename."\n";
+}
+
+if (file_put_contents($rules['playlist_name'], $m3u_content) !== FALSE) {
+    echo 'Playlist '.$rules['playlist_name'].' saved.';
 }

@@ -7,13 +7,13 @@
 - run the script.
 
 ```php
-php scheduler.php > playlist.m3u
+php scheduler.php
 ```
 
 ## Note
 
 All files in "music" folder are fake.
-They are generated with "generate-songs.php" file.
+They are generated with "generate-songs.php" file. (You can use it to generate files on Linux only).
 
 ## License
 
