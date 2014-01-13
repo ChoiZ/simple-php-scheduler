@@ -5,6 +5,11 @@ include 'rules.php';
 
 $folder = realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR.'music'.DIRECTORY_SEPARATOR;
 
+$cr = "\n";
+if (DIRECTORY_SEPARATOR == "\") {
+    $cr = "\r\n";
+}
+
 $tracks = read_folder($folder);
 
 foreach($tracks as $track) {
@@ -59,7 +64,7 @@ if ($max_track < $rules['track_separation']) {
 
 if (count($error)>0) {
     foreach($error as $msg) {
-        echo $msg."\n";
+        echo $msg.$cr;
     }
     exit();
 }
@@ -77,11 +82,11 @@ do {
 
 } while($nb_pl < $rules['playlist_size']);
 
-$m3u_content = '#EXTM3U'."\n";
+$m3u_content = '#EXTM3U'.$cr;
 
 foreach ($playlist as $item) {
-    $m3u_content .= '#EXTINF:-1, '.$item->artist.' - '.$item->title."\n";
-    $m3u_content .= $item->filename."\n";
+    $m3u_content .= '#EXTINF:-1, '.$item->artist.' - '.$item->title.$cr;
+    $m3u_content .= $item->filename.$cr;
 }
 
 if (file_put_contents($rules['playlist_name'], $m3u_content) !== FALSE) {
