@@ -1,6 +1,6 @@
 # simple-scheduler
 
-## how to use it?
+## How to use it?
 
 - add your music files in /music folder
 - edit rules.php
