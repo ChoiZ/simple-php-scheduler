@@ -6,7 +6,7 @@ include 'rules.php';
 $folder = realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR.'music'.DIRECTORY_SEPARATOR;
 
 $cr = "\n";
-if (DIRECTORY_SEPARATOR == "\") {
+if (DIRECTORY_SEPARATOR == "\\") {
     $cr = "\r\n";
 }
 
