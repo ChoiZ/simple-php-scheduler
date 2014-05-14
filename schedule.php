@@ -55,11 +55,11 @@ if (empty($rules['playlist_size'])) {
 }
 
 if ($max_artist < $rules['artist_separation']) {
-    $error[] = 'WARNING: artist_separation is to high: '.$rules['artist_separation'].' use a value between 1 and '.$max_artist;
+    $error[] = 'WARNING: artist_separation is too high: '.$rules['artist_separation'].' use a value between 1 and '.$max_artist;
 }
 
 if ($max_track < $rules['track_separation']) {
-    $error[] = 'WARNING: track_separation is to high: '.$rules['track_separation'].' use a value between 1 and '.$max_track;
+    $error[] = 'WARNING: track_separation is too high: '.$rules['track_separation'].' use a value between 1 and '.$max_track;
 }
 
 if (count($error)>0) {
