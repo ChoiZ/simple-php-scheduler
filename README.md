@@ -2,18 +2,28 @@
 
 ## How to use it?
 
-- add your music files in /music folder
-- edit rules.php
-- run the script.
+- edit `rules.php`
+- run:
 
 ```php
 php scheduler.php
 ```
 
-## Note
+You can also:
+- copy `rules.php` to `station.php`
+- run:
 
-All files in "music" folder are fake.
-They are generated with "generate-songs.php" file. (You can use it to generate files on Linux only).
+```php
+php scheduler.php station.php
+```
+
+## ChangeLog
+
+- 2014-08-08 - Update rules (Version 0.0.4)
+- 2014-05-19 - Add playlist duration (Version 0.0.3)
+- 2014-01-07 - Add create music file (Version 0.0.2)
+- 2014-01-06 - First commit (Version 0.0.1)
+
 
 ## License
 

@@ -1,14 +1,21 @@
 <?php
 
-include 'function.php';
-include 'rules.php';
-
-$folder = $rules['music']['folder'];
+include_once 'function.php';
+include_once 'rules.php';
 
 $cr = "\n";
 if (DIRECTORY_SEPARATOR == "\\") {
     $cr = "\r\n";
 }
+
+if (!empty($argv[1])) {
+    $rules_file = $argv[1];
+    if (file_exists($rules_file)) {
+        include_once($rules_file);
+    }
+}
+
+$folder = $rules['music']['folder'];
 
 $tracks = read_folder($folder);
 
