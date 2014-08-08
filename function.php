@@ -19,8 +19,8 @@ function get_track($i,$bac,$playlist) {
 
     global $rules;
     $j = $i % count($bac);
-    $artist_last_diff = array_slice($playlist, -$rules['artist_separation'], $rules['artist_separation']);
-    $track_last_diff = array_slice($playlist, -$rules['track_separation'], $rules['track_separation']);
+    $artist_last_diff = array_slice($playlist, -$rules['separation']['artist'], $rules['separation']['artist']);
+    $track_last_diff = array_slice($playlist, -$rules['separation']['track'], $rules['separation']['track']);
 
     if (isset($bac[$j])) {
         if (in_object($bac[$j]->artist, $artist_last_diff,'artist')) {

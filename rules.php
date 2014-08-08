@@ -1,9 +1,16 @@
 <?php
 
 $rules = array(
-    'allowed_extensions' => array('mp3', 'wav'),
-    'artist_separation' => 10,
-    'track_separation' => 25,
-    'playlist_name' => 'playlist.m3u',
-    'playlist_size' => 100
+    'music' => array(
+        'ext' => array('mp3'),
+        'folder' => '/Users/ChoiZ/Repos/simple-scheduler/music/'
+    ),
+    'playlist' => array(
+        'path' => '/Users/ChoiZ/Repos/simple-scheduler/playlist.m3u',
+        'size' => 100
+    ),
+    'separation' => array(
+        'artist' => 10,
+        'track' => 25
+    )
 );
