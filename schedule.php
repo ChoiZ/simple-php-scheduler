@@ -10,12 +10,11 @@ if (DIRECTORY_SEPARATOR == "\\") {
     $cr = "\r\n";
 }
 
-$allowed_extensions = array('mp3', 'wav');
 $tracks = read_folder($folder);
 
 foreach($tracks as $track) {
     $path_track = pathinfo($track);
-    if (in_array($path_track['extension'], $allowed_extensions)) {
+    if (in_array($path_track['extension'], $rules['allowed_extensions'])) {
         list($artist, $title) = explode(' - ', $path_track['filename']);
         $artist_list[] = $artist;
         $track_list[] = $title;
