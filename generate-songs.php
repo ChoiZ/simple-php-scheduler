@@ -421,6 +421,7 @@ $tracks = array(
   array('artiste' => 'zedd f/foxes','titre' => 'clarity'),
   array('artiste' => 'zedd f/hayley williams','titre' => 'stay the night')
 );
+mkdir('music/');
 foreach($tracks as $item) {
     exec('touch "music/'.$item['artiste']." - ".$item['titre'].'.mp3"');
 }
