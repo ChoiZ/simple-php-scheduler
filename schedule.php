@@ -10,19 +10,22 @@ if (DIRECTORY_SEPARATOR == "\\") {
     $cr = "\r\n";
 }
 
+$allowed_extensions = array('mp3', 'wav');
 $tracks = read_folder($folder);
 
 foreach($tracks as $track) {
     $path_track = pathinfo($track);
-    list($artist, $title) = explode(' - ', $path_track['filename']);
-    $artist_list[] = $artist;
-    $track_list[] = $title;
-    $song = new stdclass;
-    $song->artist = $artist;
-    $song->title = $title;
-    $song->filename = $folder.$track;
-    $song->duration = rand(135,305);
-    $songs[] = $song;
+    if (in_array($path_track['extension'], $allowed_extensions)) {
+        list($artist, $title) = explode(' - ', $path_track['filename']);
+        $artist_list[] = $artist;
+        $track_list[] = $title;
+        $song = new stdclass;
+        $song->artist = $artist;
+        $song->title = $title;
+        $song->filename = $folder.$track;
+        $song->duration = rand(135,305);
+        $songs[] = $song;
+    }
 }
 
 $bac = $songs;
