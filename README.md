@@ -2,6 +2,7 @@
 
 ## How to use it?
 
+- copy `rules.php.dist` to `rules.php`
 - edit `rules.php`
 - run:
 
@@ -10,7 +11,7 @@ php scheduler.php
 ```
 
 You can also:
-- copy `rules.php` to `station.php`
+- copy `rules.php.dist` to `station.php`
 - run:
 
 ```php
