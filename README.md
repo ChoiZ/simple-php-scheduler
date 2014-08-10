@@ -12,6 +12,7 @@ php scheduler.php
 
 You can also:
 - copy `rules.php.dist` to `station.php`
+- edit `station.php`
 - run:
 
 ```php
