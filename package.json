@@ -1,0 +1,19 @@
+{
+  "name": "simple-scheduler",
+  "version": "0.0.5",
+  "description": "PHP Radio Scheduler mp3 to m3u playlist",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChoiZ/simple-scheduler.git"
+  },
+  "author": "François LASSERRE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChoiZ/simple-scheduler/issues"
+  },
+  "homepage": "https://github.com/ChoiZ/simple-scheduler",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "matchdep": "^0.3.0"
+  }
+}
