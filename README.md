@@ -1,4 +1,4 @@
-# simple-scheduler
+# simple-php-scheduler
 
 ## How to use it?
 
