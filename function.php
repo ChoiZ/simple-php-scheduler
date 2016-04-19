@@ -15,43 +15,34 @@ function read_folder($folder) {
     return false;
 }
 
-function get_track($i,$bac,$playlist) {
+function get_track($i, $bac, $playlist) {
 
     global $rules;
+
     $j = $i % count($bac);
-    $artist_last_diff = array_slice($playlist, -$rules['separation']['artist'], $rules['separation']['artist']);
-    $track_last_diff = array_slice($playlist, -$rules['separation']['track'], $rules['separation']['track']);
+    $artist_last_diff = array_slice($playlist['artist'], -$rules['separation']['artist'], $rules['separation']['artist']);
+    $track_last_diff = array_slice($playlist['title'], -$rules['separation']['track'], $rules['separation']['track']);
 
     if (isset($bac[$j])) {
-        if (in_object($bac[$j]->artist, $artist_last_diff,'artist')) {
-            if(DEBUG) {
-                echo "WARNING: artist already diff\n";
+        if (in_array(strtolower($bac[$j]['artist']), $artist_last_diff)) {
+            if (DEBUG) {
+                echo "WARNING: artist ".strtolower($bac[$j]['artist'])." already diff\n";
             }
-        } else if (in_object($bac[$j]->title, $track_last_diff,'title')) {
-            if(DEBUG) {
-                echo "WARNING: track already diff\n";
-            }
-        } else {
-            if(DEBUG) {
-                echo "ok $j\n";
-            }
-            return $bac[$j];
+            return false;
         }
+        if (in_array(strtolower($bac[$j]['title']), $track_last_diff)) {
+            if (DEBUG) {
+                echo "WARNING: track ".strtolower($bac[$j]['title'])." already diff\n";
+            }
+            return false;
+        }
+        if (DEBUG) {
+            echo "Track Add ".$bac[$j]['title']."\n";
+            echo "Artist Add ".$bac[$j]['artist']."\n";
+        }
+        return $bac[$j];
     }
 
     return false;
 
-}
-
-function in_object($s,$o,$type) {
-    foreach($o as $el) {
-        foreach($el as $k => $v) {
-            if($type == $k) {
-                if($s == $v) {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
 }

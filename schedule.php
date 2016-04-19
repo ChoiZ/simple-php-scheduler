@@ -15,35 +15,43 @@ if (!empty($argv[1])) {
     }
 }
 
+$artist_list = array();
+$track_list = array();
+$bac = array();
+$playlist = array();
+$playlist['artist'] = array();
+$playlist['title'] = array();
+$playlist['filename'] = array();
+$playlist['duration'] = array();
+
 $folder = $rules['music']['folder'];
 
 $tracks = read_folder($folder);
 
 foreach($tracks as $track) {
     $path_track = pathinfo($track);
+
     if (in_array($path_track['extension'], $rules['music']['ext'])) {
         list($artist, $title) = explode(' - ', $path_track['filename']);
-        $artist_list[] = $artist;
-        $track_list[] = $title;
-        $song = new stdclass;
-        $song->artist = $artist;
-        $song->title = $title;
-        $song->filename = $folder.$track;
-        $song->duration = rand(135,305);
-        $songs[] = $song;
+        $artist_list[] = strtolower($artist);
+        $track_list[] = strtolower($title);
+        $song = array();
+        $song['artist'] = $artist;
+        $song['title'] = $title;
+        $song['filename'] = $folder.$track;
+        $song['duration'] = rand(135,305);
+        $bac[] = $song;
     }
 }
 
-$bac = $songs;
 shuffle($bac);
 
 $max_artist = floor(count(array_unique($artist_list))/2);
 $max_track = floor(count(array_unique($track_list))/2);
 
-$playlist = array();
-$i = 0;
-$nb_pl = 0;
-
+echo "max artist : ".$max_artist."\n";
+echo "max track : ".$max_track."\n";
+echo "max bac : ".count($bac)."\n";
 
 $error = array();
 
@@ -78,24 +86,28 @@ if (count($error)>0) {
     exit();
 }
 
+$i=0;
+
 do {
 
-    $track = get_track($i,$bac,$playlist);
+    $track = get_track($i, $bac, $playlist);
 
-    if ($track) {
-        $playlist[] = $track;
-        $nb_pl++;
+    if ($track !== false) {
+        $playlist['artist'][] = strtolower($track['artist']);
+        $playlist['duration'][] = $track['duration'];
+        $playlist['filename'][] = $track['filename'];
+        $playlist['title'][] = strtolower($track['title']);
     }
 
     $i++;
 
-} while($nb_pl < $rules['playlist']['size']);
+} while(count($playlist['artist']) < $rules['playlist']['size']);
 
 $m3u_content = '#EXTM3U'.$cr;
 
-foreach ($playlist as $item) {
-    $m3u_content .= '#EXTINF:'.$item->duration.', '.$item->artist.' - '.$item->title.$cr;
-    $m3u_content .= $item->filename.$cr;
+foreach ($playlist['filename'] as $item) {
+    //$m3u_content .= '#EXTINF:'.$item->duration.', '.$item->artist.' - '.$item->title.$cr;
+    $m3u_content .= $item.$cr;
 }
 
 if (file_put_contents($rules['playlist']['path'], $m3u_content) !== FALSE) {
