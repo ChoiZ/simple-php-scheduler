@@ -21,6 +21,7 @@ php scheduler.php station.php
 
 ## ChangeLog
 
+- 2016-04-19 - Update code (Version 0.0.5)
 - 2014-08-08 - Update rules (Version 0.0.4)
 - 2014-05-19 - Add playlist duration (Version 0.0.3)
 - 2014-01-07 - Add create music file (Version 0.0.2)
@@ -35,7 +36,7 @@ php scheduler.php station.php
 
 The MIT License
 
-Copyright (c) 2013 François LASSERRE (https://www.github.com/ChoiZ)
+Copyright (c) 2013-2016 François LASSERRE (https://www.github.com/ChoiZ)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
