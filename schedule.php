@@ -47,7 +47,7 @@ foreach($tracks as $track) {
 shuffle($bac);
 
 $max_artist = floor(count(array_unique($artist_list))/2);
-$max_track = floor(count(array_unique($track_list))/2);
+$max_track = floor(count(array_unique($track_list)));
 
 echo "max artist : ".$max_artist."\n";
 echo "max track : ".$max_track."\n";
@@ -100,6 +100,9 @@ do {
     }
 
     $i++;
+    if ($i % $max_track == 2) {
+        shuffle($bac);
+    }
 
 } while(count($playlist['artist']) < $rules['playlist']['size']);
 
