@@ -2,8 +2,10 @@
 
 ## How to use it?
 
-- copy `rules.php.dist` to `rules.php`
-- edit `rules.php`
+- copy `config.php.dist` to `config.php`
+- edit `config.php`
+- copy `rules/separation.php.dist` to `rules/separation.php`
+- edit `rules/separation.php`
 - run:
 
 ```php
@@ -11,7 +13,7 @@ php scheduler.php
 ```
 
 You can also:
-- copy `rules.php.dist` to `station.php`
+- copy `separation.php.dist` to `station.php`
 - edit `station.php`
 - run:
 
@@ -21,6 +23,7 @@ php scheduler.php station.php
 
 ## ChangeLog
 
+- 2016-04-20 - Update code / config / rules (Version 0.0.6)
 - 2016-04-19 - Update code (Version 0.0.5)
 - 2014-08-08 - Update rules (Version 0.0.4)
 - 2014-05-19 - Add playlist duration (Version 0.0.3)

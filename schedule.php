@@ -6,15 +6,17 @@ if (DIRECTORY_SEPARATOR == "\\") {
     $cr = "\r\n";
 }
 
+include_once 'config.php';
+
 if (!empty($argv[1])) {
     $rules_file = $argv[1];
     if (file_exists($rules_file)) {
         include_once($rules_file);
     } else {
-        include_once 'rules.php';
+        include_once 'rules/separation.php';
     }
 } else {
-    include_once 'rules.php';
+    include_once 'rules/separation.php';
 }
 
 $artist_list = array();
@@ -26,14 +28,14 @@ $playlist['title'] = array();
 $playlist['filename'] = array();
 $playlist['duration'] = array();
 
-$folder = $rules['music']['folder'];
+$folder = $config['music']['folder'];
 
 $tracks = read_folder($folder);
 
 foreach($tracks as $track) {
     $path_track = pathinfo($track);
 
-    if (in_array($path_track['extension'], $rules['music']['ext'])) {
+    if (in_array($path_track['extension'], $config['music']['ext'])) {
         list($artist, $title) = explode(' - ', $path_track['filename']);
         $artist_list[] = strtolower($artist);
         $track_list[] = strtolower($title);
@@ -57,20 +59,20 @@ echo "max bac : ".count($bac)."\n";
 
 $error = array();
 
+if (empty($config['playlist']['path'])) {
+    $error[] = 'WARNING: playlist_path must be set in config.php file.';
+}
+
+if (empty($config['playlist']['size'])) {
+    $error[] = 'WARNING: playlist_size must be set in config.php file.';
+}
+
 if (empty($rules['separation']['artist'])) {
-    $error[] = 'WARNING: artist_separation must be set in rules.php file.';
+    $error[] = 'WARNING: artist_separation must be set in separation.php file.';
 }
 
 if (empty($rules['separation']['track'])) {
-    $error[] = 'WARNING: track_separation must be set in rules.php file.';
-}
-
-if (empty($rules['playlist']['path'])) {
-    $error[] = 'WARNING: playlist_path must be set in rules.php file.';
-}
-
-if (empty($rules['playlist']['size'])) {
-    $error[] = 'WARNING: playlist_size must be set in rules.php file.';
+    $error[] = 'WARNING: track_separation must be set in separation.php file.';
 }
 
 if ($max_artist < $rules['separation']['artist']) {
@@ -106,7 +108,7 @@ do {
         shuffle($bac);
     }
 
-} while(count($playlist['artist']) < $rules['playlist']['size']);
+} while(count($playlist['artist']) < $config['playlist']['size']);
 
 $m3u_content = '#EXTM3U'.$cr;
 
@@ -115,8 +117,8 @@ foreach ($playlist['filename'] as $item) {
     $m3u_content .= $item.$cr;
 }
 
-if (file_put_contents($rules['playlist']['path'], $m3u_content) !== FALSE) {
-    echo 'Playlist '.$rules['playlist']['path'].' saved.'.$cr;
+if (file_put_contents($config['playlist']['path'], $m3u_content) !== FALSE) {
+    echo 'Playlist '.$config['playlist']['path'].' saved.'.$cr;
 }
 
 function read_folder($folder) {

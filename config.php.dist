@@ -8,9 +8,5 @@ $rules = array(
     'playlist' => array(
         'path' => '/Users/ChoiZ/Repos/simple-scheduler/playlist.m3u',
         'size' => 100
-    ),
-    'separation' => array(
-        'artist' => 10,
-        'track' => 25
     )
 );
