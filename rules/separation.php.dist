@@ -1,8 +1,0 @@
-<?php
-
-$rules = array(
-    'separation' => array(
-        'artist' => 10,
-        'track' => 25
-    )
-);

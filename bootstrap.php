@@ -1,39 +1,67 @@
 <?php
+
+if (!file_exists(__DIR__.'/config.php')) {
+    exit('Missing config file!');
+}
+
+require_once __DIR__.'/config.php';
+
+$config_dist = file_get_contents(__DIR__.'/config.php.dist');
+preg_match("/CONFIG', (.*)\)/", $config_dist, $version);
+
+if (CONFIG != $version[1]) {
+    exit('Config is not up to date!');
+}
+
 define('DEBUG', false);
+
 $cr = "\n";
 
 if (DIRECTORY_SEPARATOR == "\\") {
     $cr = "\r\n";
 }
 
-include_once 'config.php';
+ini_set('default_charset', ENCODING);
+ini_set('php.input_encoding', ENCODING);
+ini_set('php.internal_encoding', ENCODING);
+ini_set('php.output_encoding', ENCODING);
+date_default_timezone_set(TIMEZONE);
 
-$file_loaded = 0;
-
-if (!empty($argv[1])) {
-    array_shift($argv);
-    foreach ($argv as $conf) {
-        if (file_exists($conf.'.php')) {
-            include_once($conf.'.php');
-            $file_loaded++;
+function loader($class)
+{
+    $class = str_replace('\\', '/', $class);
+    $file = __DIR__.'/'.strtolower($class).'.php';
+    try {
+        if (file_exists($file)) {
+            require_once $file;
         }
+    } catch (Exception $e) {
+        echo 'Exception : ',  $e->getMessage(), "\n";
     }
 }
+spl_autoload_register('loader');
 
-if ($file_loaded === 0) {
-    include_once 'rules/separation.php';
+$config = new Engine\Config($music_ext, $music_path, $playlist_path, $playlist_size);
+
+foreach ($stations as $station_name => $rules) {
+    $config->addStation(new Engine\Station($station_name, $rules));
 }
 
-$multistation = false;
+$schedule = new Engine\Schedule();
+
+$stations = $config->getStations();
 $nb_station = count($stations);
 
 if ($nb_station > 0) {
 
-    if ($nb_station > 1) {
-        $multistation = true;
-    }
-
     foreach ($stations as $station) {
+
+        $station_name = $station->getName();
+        $rules = $station->getRules();
+        echo "Station : ";
+        echo $station_name."\n";
+        echo "Rules : \n";
+        print_r($rules);
 
         $toolong = false;
         $artist_list = array();
@@ -44,14 +72,14 @@ if ($nb_station > 0) {
         $playlist['title'] = array();
         $playlist['filename'] = array();
         $playlist['duration'] = array();
-        $folder = $config['music']['folder'].$station.'/';
+        $folder = $config->getMusicFolder().$station_name.'/';
 
-        $tracks = read_folder($folder);
+        $tracks = $schedule->readFolder($folder);
 
         foreach($tracks as $track) {
             $path_track = pathinfo($track);
 
-            if (in_array($path_track['extension'], $config['music']['ext'])) {
+            if (in_array($path_track['extension'], $config->getMusicExt())) {
                 list($artist, $title) = explode(' - ', $path_track['filename']);
                 $artist_list[] = strtolower($artist);
                 $track_list[] = strtolower($title);
@@ -75,11 +103,11 @@ if ($nb_station > 0) {
 
         $error = array();
 
-        if (empty($config['playlist']['path'])) {
+        if (empty($config->getPlaylistPath())) {
             $error[] = 'WARNING: playlist_path must be set in config.php file.';
         }
 
-        if (empty($config['playlist']['size'])) {
+        if (empty($config->getPlaylistSize())) {
             $error[] = 'WARNING: playlist_size must be set in config.php file.';
         }
 
@@ -110,7 +138,7 @@ if ($nb_station > 0) {
 
         do {
 
-            $track = get_track($i, $bac, $playlist);
+            $track = $schedule->getTrack($i, $bac, $playlist, $rules);
 
             if ($track !== false) {
                 $playlist['artist'][] = strtolower($track['artist']);
@@ -124,7 +152,7 @@ if ($nb_station > 0) {
                 shuffle($bac);
             }
 
-        } while(count($playlist['artist']) < $config['playlist']['size']);
+        } while(count($playlist['artist']) < $config->getPlaylistSize());
 
         $m3u_content = '#EXTM3U'.$cr;
 
@@ -133,54 +161,8 @@ if ($nb_station > 0) {
             $m3u_content .= $item.$cr;
         }
 
-        if (file_put_contents($config['playlist']['path'].$station.'.m3u', $m3u_content) !== FALSE) {
-            echo 'Playlist '.$config['playlist']['path'].$station.'.m3u saved.'.$cr;
+        if (file_put_contents($config->getPlaylistPath().$station_name.'.m3u', $m3u_content) !== FALSE) {
+            echo 'Playlist '.$config->getPlaylistPath().$station_name.'.m3u saved.'.$cr;
         }
     }
-}
-
-function read_folder($folder) {
-    if ($handle = opendir($folder)) {
-        $out = array();
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." && $entry != "..") {
-                $out[] = $entry;
-            }
-        }
-        closedir($handle);
-        return $out;
-    }
-    return false;
-}
-
-function get_track($i, $bac, $playlist) {
-
-    global $rules;
-
-    $j = $i % count($bac);
-    $artist_last_diff = array_slice($playlist['artist'], -$rules['separation']['artist'], $rules['separation']['artist']);
-    $track_last_diff = array_slice($playlist['title'], -$rules['separation']['track'], $rules['separation']['track']);
-
-    if (isset($bac[$j])) {
-        if (in_array(strtolower($bac[$j]['artist']), $artist_last_diff)) {
-            if (DEBUG) {
-                echo "WARNING: artist ".strtolower($bac[$j]['artist'])." already diff\n";
-            }
-            return false;
-        }
-        if (in_array(strtolower($bac[$j]['title']), $track_last_diff)) {
-            if (DEBUG) {
-                echo "WARNING: track ".strtolower($bac[$j]['title'])." already diff\n";
-            }
-            return false;
-        }
-        if (DEBUG) {
-            echo "Track Add ".$bac[$j]['title']."\n";
-            echo "Artist Add ".$bac[$j]['artist']."\n";
-        }
-        return $bac[$j];
-    }
-
-    return false;
-
 }

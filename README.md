@@ -4,25 +4,15 @@
 
 - copy `config.php.dist` to `config.php`
 - edit `config.php`
-- copy `rules/separation.php.dist` to `rules/separation.php`
-- edit `rules/separation.php`
 - run:
 
 ```php
 php scheduler.php
 ```
 
-You can also:
-- copy `separation.php.dist` to `station.php`
-- edit `station.php`
-- run:
-
-```php
-php scheduler.php station.php
-```
-
 ## ChangeLog
 
+- 2016-04-21 - Rewrite all code with objects (Version 0.1.0)
 - 2016-04-20 - Update code / config / rules (Version 0.0.6)
 - 2016-04-19 - Update code (Version 0.0.5)
 - 2014-08-08 - Update rules (Version 0.0.4)

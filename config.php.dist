@@ -1,19 +1,19 @@
 <?php
+// Config version
+define('CONFIG', 1);
 
-$rules = array(
-    'music' => array(
-        'ext' => array('mp3'),
-        // folder for my_station is:
-        // /Users/ChoiZ/Repos/simple-scheduler/music/my_station/
-        'folder' => '/Users/ChoiZ/Repos/simple-scheduler/music/'
-    ),
-    'playlist' => array(
-        // playlist name is /Users/ChoiZ/Repos/simple-scheduler/my_station.m3u
-        'path' => '/Users/ChoiZ/Repos/simple-scheduler/',
-        'size' => 100
-    )
-);
+// Encoding, Lang, Timezone
+define('ENCODING', 'UTF-8');
+define('LANG', 'fr_FR');
+define('TIMEZONE', 'Europe/Paris');
 
-$stations = array(
-    'my_station'
-);
+$music_ext = array('mp3');
+$music_path = '/mnt/disk1/tracks/';
+
+$playlist_size = 300;
+$playlist_path = '/mnt/disk1/simple-php-scheduler/';
+
+$stations = [];
+// Configure station(s)
+$stations['station_1'] = array('separation' => array('artist' => 50, 'track' => 150));
+$stations['station_2'] = array('separation' => array('artist' => 100, 'track' => 300));
