@@ -49,6 +49,11 @@ foreach ($stations as $station_name => $rules) {
 
 $schedule = new Engine\Schedule();
 
+//
+//
+// TODO: Rewrite after this line ;)
+//
+//
 $stations = $config->getStations();
 $nb_station = count($stations);
 
