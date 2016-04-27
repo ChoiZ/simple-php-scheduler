@@ -41,11 +41,7 @@ function loader($class)
 }
 spl_autoload_register('loader');
 
-$config = new Engine\Config($music_ext, $music_path, $playlist_path, $playlist_size);
-
-foreach ($stations as $station_name => $rules) {
-    $config->addStation(new Engine\Station($station_name, $rules));
-}
+$config = new Engine\Config($music_ext, $music_path, $playlist_path, $playlist_size, $stations);
 
 $schedule = new Engine\Schedule();
 
