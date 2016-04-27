@@ -33,7 +33,7 @@ class Config
         $this->config_playlist['size'] = $playlist_size;
 
         foreach ($stations as $station_name => $rules) {
-            $this->addStation(new Engine\Station($station_name, $rules));
+            $this->addStation(new Station($station_name, $rules));
         }
     }
 
