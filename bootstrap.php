@@ -15,12 +15,6 @@ if (CONFIG != $version[1]) {
 
 define('DEBUG', false);
 
-$cr = "\n";
-
-if (DIRECTORY_SEPARATOR == "\\") {
-    $cr = "\r\n";
-}
-
 ini_set('default_charset', ENCODING);
 ini_set('php.input_encoding', ENCODING);
 ini_set('php.internal_encoding', ENCODING);
@@ -43,4 +37,4 @@ spl_autoload_register('loader');
 
 $config = new Engine\Config($music_ext, $music_path, $playlist_path, $playlist_size, $stations);
 
-$schedule = new Engine\Schedule();
+$schedule = new Engine\Schedule($config);

@@ -35,6 +35,12 @@ class Config
         foreach ($stations as $station_name => $rules) {
             $this->addStation(new Station($station_name, $rules));
         }
+
+        $this->cr = "\n";
+
+        if (DIRECTORY_SEPARATOR == "\\") {
+            $this->cr = "\r\n";
+        }
     }
 
     /**
@@ -53,7 +59,7 @@ class Config
      * getMusicExt
      *
      * @access public
-     * @return void
+     * @return array
      */
     public function getMusicExt()
     {
@@ -64,7 +70,7 @@ class Config
      * getMusicFolder
      *
      * @access public
-     * @return void
+     * @return string
      */
     public function getMusicFolder()
     {
@@ -75,7 +81,7 @@ class Config
      * getPlaylistPath
      *
      * @access public
-     * @return void
+     * @return string
      */
     public function getPlaylistPath()
     {
@@ -86,7 +92,7 @@ class Config
      * getPlaylistSize
      *
      * @access public
-     * @return void
+     * @return int
      */
     public function getPlaylistSize()
     {
@@ -97,10 +103,21 @@ class Config
      * getStations
      *
      * @access public
-     * @return void
+     * @return array
      */
     public function getStations()
     {
         return $this->config_stations;
+    }
+
+    /**
+     * getCr
+     *
+     * @access public
+     * @return string
+     */
+    public function getCr()
+    {
+        return $this->cr;
     }
 }

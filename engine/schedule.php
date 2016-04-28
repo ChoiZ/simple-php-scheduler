@@ -4,8 +4,10 @@ namespace Engine;
 
 class Schedule
 {
-    public function __construct()
+    public function __construct($config)
     {
+        $this->config = $config;
+        $this->process();
     }
 
     public function readFolder($folder)
@@ -54,6 +56,8 @@ class Schedule
 
     public function process()
     {
+        $config = $this->config;
+        $cr = $config->getCr();
         $stations = $config->getStations();
         $nb_station = count($stations);
 
