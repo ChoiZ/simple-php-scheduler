@@ -12,6 +12,7 @@ php scheduler.php
 
 ## ChangeLog
 
+- 2016-04-28 - Fix source and clean bootstrap (Version 0.1.1)
 - 2016-04-21 - Rewrite all code with objects (Version 0.1.0)
 - 2016-04-20 - Update code / config / rules (Version 0.0.6)
 - 2016-04-19 - Update code (Version 0.0.5)

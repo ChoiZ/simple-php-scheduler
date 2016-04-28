@@ -21,15 +21,26 @@ class Config
      * @param mixed $music_path
      * @param mixed $playlist_path
      * @param mixed $playlist_size
+     * @param array $stations
      * @access public
      * @return void
      */
-    public function __construct($music_ext = array('mp3'), $music_path, $playlist_path, $playlist_size)
+    public function __construct($music_ext = array('mp3'), $music_path, $playlist_path, $playlist_size, $stations)
     {
         $this->config_music['ext'] = $music_ext;
         $this->config_music['path'] = $music_path;
         $this->config_playlist['path'] = $playlist_path;
         $this->config_playlist['size'] = $playlist_size;
+
+        foreach ($stations as $station_name => $rules) {
+            $this->addStation(new Station($station_name, $rules));
+        }
+
+        $this->cr = "\n";
+
+        if (DIRECTORY_SEPARATOR == "\\") {
+            $this->cr = "\r\n";
+        }
     }
 
     /**
@@ -48,7 +59,7 @@ class Config
      * getMusicExt
      *
      * @access public
-     * @return void
+     * @return array
      */
     public function getMusicExt()
     {
@@ -59,7 +70,7 @@ class Config
      * getMusicFolder
      *
      * @access public
-     * @return void
+     * @return string
      */
     public function getMusicFolder()
     {
@@ -70,7 +81,7 @@ class Config
      * getPlaylistPath
      *
      * @access public
-     * @return void
+     * @return string
      */
     public function getPlaylistPath()
     {
@@ -81,7 +92,7 @@ class Config
      * getPlaylistSize
      *
      * @access public
-     * @return void
+     * @return int
      */
     public function getPlaylistSize()
     {
@@ -92,10 +103,21 @@ class Config
      * getStations
      *
      * @access public
-     * @return void
+     * @return array
      */
     public function getStations()
     {
         return $this->config_stations;
+    }
+
+    /**
+     * getCr
+     *
+     * @access public
+     * @return string
+     */
+    public function getCr()
+    {
+        return $this->cr;
     }
 }
