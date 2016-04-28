@@ -2,14 +2,34 @@
 
 namespace Engine;
 
+/**
+ * Schedule
+ *
+ * @author François LASSERRE
+ * @copyright Copyright (c) 2016 All rights reserved.
+ */
 class Schedule
 {
+    /**
+     * __construct
+     *
+     * @param Class $config
+     * @access public
+     * @return void
+     */
     public function __construct($config)
     {
         $this->config = $config;
         $this->process();
     }
 
+    /**
+     * readFolder
+     *
+     * @param string $folder
+     * @access public
+     * @return array|false
+     */
     public function readFolder($folder)
     {
         if ($handle = opendir($folder)) {
@@ -25,6 +45,16 @@ class Schedule
         return false;
     }
 
+    /**
+     * getTrack
+     *
+     * @param int $i
+     * @param array $bac
+     * @param array $playlist
+     * @param array $rules
+     * @access public
+     * @return false|object
+     */
     public function getTrack($i, $bac, $playlist, $rules)
     {
         $j = $i % count($bac);
@@ -54,6 +84,12 @@ class Schedule
         return false;
     }
 
+    /**
+     * process
+     *
+     * @access public
+     * @return void
+     */
     public function process()
     {
         $config = $this->config;
