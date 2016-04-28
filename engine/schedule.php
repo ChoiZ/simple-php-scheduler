@@ -67,10 +67,12 @@ class Schedule
 
                 $station_name = $station->getName();
                 $rules = $station->getRules();
-                echo "Station : ";
-                echo $station_name."\n";
-                echo "Rules : \n";
-                print_r($rules);
+                if (DEBUG) {
+                    echo "Station : ";
+                    echo $station_name."\n";
+                    echo "Rules : \n";
+                    print_r($rules);
+                }
 
                 $toolong = false;
                 $artist_list = array();
@@ -106,9 +108,11 @@ class Schedule
                 $max_artist = floor(count(array_unique($artist_list)));
                 $max_track = floor(count(array_unique($track_list)));
 
-                echo "max artist : ".$max_artist."\n";
-                echo "max track : ".$max_track."\n";
-                echo "max bac : ".count($bac)."\n";
+                if (DEBUG) {
+                    echo "max artist : ".$max_artist."\n";
+                    echo "max track : ".$max_track."\n";
+                    echo "max bac : ".count($bac)."\n";
+                }
 
                 $error = array();
 
