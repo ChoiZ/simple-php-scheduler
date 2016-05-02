@@ -25,6 +25,7 @@ php scheduler.php
 ## TodoList
 
 - Add phpunit
+- Add config creator
 
 ## License
 
