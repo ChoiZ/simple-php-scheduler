@@ -24,6 +24,7 @@ php scheduler.php
 
 ## TodoList
 
+- Add artist separator with explode on ", " and " & "
 - Add phpunit
 - Add config creator
 
