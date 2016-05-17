@@ -128,10 +128,12 @@ class Schedule
 
                     if (in_array($path_track['extension'], $config->getMusicExt())) {
                         list($artist, $title) = explode(' - ', $path_track['filename']);
-                        $artist_list[] = strtolower($artist);
+                        $artists = preg_split('/(, | & )/', strtolower($artist));
+                        $artist_list[] = strtolower($artists);
                         $track_list[] = strtolower($title);
                         $song = array();
                         $song['artist'] = $artist;
+                        $song['artists'] = $artists;
                         $song['title'] = $title;
                         $song['filename'] = $folder.$track;
                         $song['duration'] = rand(135,305);
