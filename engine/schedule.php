@@ -58,15 +58,20 @@ class Schedule
     public function getTrack($i, $bac, $playlist, $rules)
     {
         $j = $i % count($bac);
-        $artist_last_diff = array_slice($playlist['artist'], -$rules['separation']['artist'], $rules['separation']['artist']);
+        $artist_last_diff = array_slice($playlist['artists'], -$rules['separation']['artist'], $rules['separation']['artist']);
         $track_last_diff = array_slice($playlist['title'], -$rules['separation']['track'], $rules['separation']['track']);
 
         if (isset($bac[$j])) {
-            if (in_array(strtolower($bac[$j]['artist']), $artist_last_diff)) {
-                if (DEBUG) {
-                    echo "WARNING: artist ".strtolower($bac[$j]['artist'])." already diff\n";
+            $artists = $bac[$j]['artists'];
+            foreach($artists as $artist) {
+                foreach($artist_last_diff as $last_diff) {
+                    if (in_array($artist, $last_diff)) {
+                        if (DEBUG) {
+                            echo "WARNING: artist ".$artist." already diff\n";
+                        }
+                        return false;
+                    }
                 }
-                return false;
             }
             if (in_array(strtolower($bac[$j]['title']), $track_last_diff)) {
                 if (DEBUG) {
@@ -116,6 +121,7 @@ class Schedule
                 $bac = array();
                 $playlist = array();
                 $playlist['artist'] = array();
+                $playlist['artists'] = array();
                 $playlist['title'] = array();
                 $playlist['filename'] = array();
                 $playlist['duration'] = array();
@@ -128,10 +134,14 @@ class Schedule
 
                     if (in_array($path_track['extension'], $config->getMusicExt())) {
                         list($artist, $title) = explode(' - ', $path_track['filename']);
-                        $artist_list[] = strtolower($artist);
+                        $artists = preg_split('/(, | & )/', strtolower($artist));
+                        foreach ($artists as $art) {
+                            $artist_list[] = strtolower($art);
+                        }
                         $track_list[] = strtolower($title);
                         $song = array();
                         $song['artist'] = $artist;
+                        $song['artists'] = $artists;
                         $song['title'] = $title;
                         $song['filename'] = $folder.$track;
                         $song['duration'] = rand(135,305);
@@ -191,6 +201,7 @@ class Schedule
 
                     if ($track !== false) {
                         $playlist['artist'][] = strtolower($track['artist']);
+                        $playlist['artists'][] = $track['artists'];
                         $playlist['duration'][] = $track['duration'];
                         $playlist['filename'][] = $track['filename'];
                         $playlist['title'][] = strtolower($track['title']);
