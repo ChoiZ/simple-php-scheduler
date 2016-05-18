@@ -7,7 +7,7 @@
 - run:
 
 ```php
-php scheduler.php
+php bootstrap.php
 ```
 
 ## ChangeLog
