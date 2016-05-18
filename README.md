@@ -25,7 +25,8 @@ php scheduler.php
 
 ## TodoList
 
-- Add phpunit
+- Add song length (playlist length in hours or minutes) with id3tag library
+- Add phpunit / travis.ci
 - Add config creator
 
 ## License
