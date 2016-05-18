@@ -25,10 +25,7 @@ php bootstrap.php
 
 ## TodoList
 
-- Add class for tracks / rules
-- Add song length (playlist length in hours or minutes) with id3tag library
-- Add phpunit / travis.ci
-- Add config creator
+Create a new issue.
 
 ## License
 
